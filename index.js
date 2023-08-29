@@ -17,3 +17,29 @@ document.querySelector(".slider-prev").addEventListener("click", function () {
   }
   sliderLine.style.left = -offset + "px";
 });
+
+navigator.serviceWorker.register("./index.js");
+
+const CacheKey = "v0";
+
+function cache() {
+  return caches.open(CacheKey).then(
+    (cache) => {
+      return cache.addAll([
+        "./index.html",
+        "./index.css",
+        "./index.js",
+        "./image/583.jpg",
+        "./image/1575.jpg",
+        "./image/4576.jpg",
+      ]);
+    },
+    (error) => {
+      console.log(error);
+    }
+  );
+}
+
+self.addEventListener("install", (e) => {
+  e.waitUntil(cache());
+});
